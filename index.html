@@ -1635,7 +1635,7 @@
 					Array.isArray(reviews) && reviews.length ? reviews : defaultReviews;
 
 				// Honor collapsed/expanded state: show only first 3 by default.
-				const displayReviews = (window.testimonialsExpanded)
+				const displayReviews = window.testimonialsExpanded
 					? safeReviews
 					: safeReviews.slice(0, 3);
 				grid.innerHTML = "";
@@ -1681,38 +1681,39 @@
 					grid.appendChild(card);
 				});
 
-					// Ensure the toggle button exists and update its state
-					updateTestimonialsToggle(safeReviews.length);
+				// Ensure the toggle button exists and update its state
+				updateTestimonialsToggle(safeReviews.length);
 			}
 
-				function updateTestimonialsToggle(totalCount) {
-					let btn = document.getElementById("toggle-testimonials");
-					const grid = document.querySelector(".testimonials-grid");
-					if (!grid) return;
+			function updateTestimonialsToggle(totalCount) {
+				let btn = document.getElementById("toggle-testimonials");
+				const grid = document.querySelector(".testimonials-grid");
+				if (!grid) return;
 
-					if (!btn) {
-						btn = document.createElement("button");
-						btn.id = "toggle-testimonials";
-						btn.style.cssText = "display:block; margin:18px auto 0; padding:10px 14px; border-radius:8px; background:#132b3e; color:white; border:none; cursor:pointer; font-weight:700;";
-						btn.addEventListener("click", function () {
-							window.testimonialsExpanded = !window.testimonialsExpanded;
-							renderTestimonials(allReviews, adminMode);
-						});
-						grid.parentNode.insertBefore(btn, grid.nextSibling);
-					}
+				if (!btn) {
+					btn = document.createElement("button");
+					btn.id = "toggle-testimonials";
+					btn.style.cssText =
+						"display:block; margin:18px auto 0; padding:10px 14px; border-radius:8px; background:#132b3e; color:white; border:none; cursor:pointer; font-weight:700;";
+					btn.addEventListener("click", function () {
+						window.testimonialsExpanded = !window.testimonialsExpanded;
+						renderTestimonials(allReviews, adminMode);
+					});
+					grid.parentNode.insertBefore(btn, grid.nextSibling);
+				}
 
-					if (totalCount <= 3) {
-						btn.style.display = "none";
+				if (totalCount <= 3) {
+					btn.style.display = "none";
+				} else {
+					btn.style.display = "inline-block";
+					if (window.testimonialsExpanded) {
+						btn.textContent = `Voir moins (${totalCount})`;
 					} else {
-						btn.style.display = "inline-block";
-						if (window.testimonialsExpanded) {
-							btn.textContent = `Voir moins (${totalCount})`;
-						} else {
-							const remaining = Math.max(0, totalCount - 3);
-							btn.textContent = `Voir les ${remaining} avis restants`;
-						}
+						const remaining = Math.max(0, totalCount - 3);
+						btn.textContent = `Voir les ${remaining} avis restants`;
 					}
 				}
+			}
 
 			let allReviews = [];
 			let adminMode = false;
@@ -1935,7 +1936,6 @@
 						review: document.getElementById("review-text").value.trim(),
 					};
 
-
 					function isValidEmail(e) {
 						return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 					}
@@ -1957,7 +1957,8 @@
 					// Validate email format before sending to server
 					if (!isValidEmail(payload.email)) {
 						if (reviewStatus) {
-							reviewStatus.textContent = "Veuillez entrer une adresse email valide.";
+							reviewStatus.textContent =
+								"Veuillez entrer une adresse email valide.";
 							reviewStatus.style.color = "#7a1d1d";
 						}
 						return;
@@ -2041,16 +2042,18 @@
 
 			// Attach to same-page anchor links and override default jump to use animator.
 			document.querySelectorAll('a[href^="#"]').forEach((a) => {
-				a.addEventListener('click', function (e) {
-					const href = this.getAttribute('href');
-					if (!href || href === '#' || !href.startsWith('#')) return;
+				a.addEventListener("click", function (e) {
+					const href = this.getAttribute("href");
+					if (!href || href === "#" || !href.startsWith("#")) return;
 					// Let external links behave normally
 					e.preventDefault();
 					// Close mobile nav if open
-					const navEl = document.getElementById('mainNav');
-					if (navEl) navEl.classList.remove('open');
+					const navEl = document.getElementById("mainNav");
+					if (navEl) navEl.classList.remove("open");
 					smoothScrollToHash(href, 800);
-					try { history.replaceState(null, '', href); } catch (err) {}
+					try {
+						history.replaceState(null, "", href);
+					} catch (err) {}
 				});
 			});
 		</script>
