@@ -7,6 +7,14 @@
       "location": "colmar",
       "rating": 4,
       "review": "Je recommande !"
+    },
+    {
+      "id": 2,
+      "nom": "Mukhtar M",
+      "email": "mukhtarmahsumi24@gmail.com",
+      "location": "",
+      "rating": 4,
+      "review": "Je recommande !"
     }
   ]
 }
